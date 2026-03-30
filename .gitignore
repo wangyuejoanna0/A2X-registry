@@ -66,8 +66,10 @@ claude scripts/
 prompt/
 
 # Results — only track summary.json files referenced by README
-results/**
-!results/**/summary.json
+results/*
+!results/*/
+results/*/*
+!results/*/summary.json
 
 # Docs — local-only design notes
 docs/optimize_design.md
