@@ -78,6 +78,7 @@ function buildPreview(
   defs: DatasetDefaults | null,
   isNewDataset: boolean,
   newEmbeddingModel: string,
+  showBuildLogs: boolean,
 ): PreviewInfo {
   const ds = dataset || "<dataset>";
   const createStep: PreviewStep | null = isNewDataset
@@ -166,6 +167,7 @@ function buildPreview(
   if (fields.maxTokValidate)     buildBody.max_tokens_validate     = parseInt(fields.maxTokValidate);
   if (fields.maxTokKeywords)     buildBody.max_tokens_keywords     = parseInt(fields.maxTokKeywords);
   if (fields.buildWorkers)       buildBody.workers             = parseInt(fields.buildWorkers);
+  if (showBuildLogs) buildBody.log_level = "INFO";
   return [{ method: "POST", path: `/api/datasets/${ds}/build`, body: buildBody }];
 }
 
@@ -362,7 +364,7 @@ export default function AdminPanel() {
   const activeDataset = useNew ? newDatasetName.trim() : dataset;
   const defs = DATASET_DEFAULTS[activeDataset] ?? null;
 
-  const preview = buildPreview(op, regType, a2aMode, activeDataset, fields, persistent, resume, defs, useNew, embeddingModel);
+  const preview = buildPreview(op, regType, a2aMode, activeDataset, fields, persistent, resume, defs, useNew, embeddingModel, showBuildLogs);
 
   const setField = (key: string, val: string) =>
     setFields((prev) => ({ ...prev, [key]: val }));
@@ -422,14 +424,14 @@ export default function AdminPanel() {
         if (useNew) { setUseNew(false); setDataset(activeDataset); }
       }
 
-      if (op === "build" && lastStatus < 400) {
+      if (op === "build" && lastStatus < 400 && showBuildLogs) {
         openStream(activeDataset);
       }
     } catch (e) {
       setLoading(false);
       setReqError(String(e));
     }
-  }, [preview, op, activeDataset, refreshDatasets, openStream, useNew]);
+  }, [preview, op, activeDataset, refreshDatasets, openStream, useNew, showBuildLogs]);
 
   const handleCancelBuild = useCallback(async () => {
     if (!activeDataset) return;

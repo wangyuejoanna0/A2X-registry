@@ -193,10 +193,12 @@ def _run_taxonomy_build(dataset: str, resume: str, extra_params: dict = None,
 
     handler = _LogCapture()
     handler.setFormatter(logging.Formatter("%(asctime)s  %(message)s", datefmt="%H:%M:%S"))
-    handler.setLevel(logging.DEBUG)
     # Attach directly to src.a2x logger — captures all build output without root-level filtering.
     # Thread-ID filter above ensures concurrent builds don't receive each other's log records.
     a2x_logger = logging.getLogger("src.a2x")
+    # Use caller-specified log level, otherwise follow the logger's effective level
+    log_level_name = (extra_params or {}).pop("log_level", None)
+    handler.setLevel(getattr(logging, (log_level_name or "").upper(), a2x_logger.getEffectiveLevel()))
     a2x_logger.addHandler(handler)
 
     try:

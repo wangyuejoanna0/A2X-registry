@@ -331,6 +331,7 @@ API 由 4 个路由模块 + 1 个应用级端点组成：
 | `max_categories_size` | int | — | 同级最大类别数 |
 | `min_leaf_size` | int | — | 叶节点最小服务数 |
 | `enable_cross_domain` | bool | — | 是否启用跨域分配 |
+| `log_level` | string | — | 构建日志捕获级别（`"DEBUG"` / `"INFO"` / `"WARNING"` / `"ERROR"`），未指定时跟随系统默认级别 |
 
 **响应：**
 ```json
@@ -565,5 +566,5 @@ LLM 相关性判断，用于对比图中验证检索结果质量。
 多个数据集可同时构建，互不干扰：
 
 - `_build_jobs` / `_log_subs` / `_cancel_flags` 均以 `dataset` 为 key 独立存储
-- `_LogCapture` handler 按**线程 ID** 过滤日志记录，防止两个构建线程共享同一 `src.a2x` logger 时日志串流
+- `_LogCapture` handler 按**线程 ID** 过滤日志记录，防止两个构建线程共享同一 `src.a2x` logger 时日志串流；日志捕获级别由请求参数 `log_level` 控制，未指定时跟随 `src.a2x` logger 的系统默认级别
 - `_push_to_subs(dataset, event)` 只向该数据集的订阅者队列推送

@@ -149,3 +149,5 @@ class BuildRequest(BaseModel):
     # Cross-domain & workers
     enable_cross_domain: Optional[bool] = None
     workers: Optional[int] = None
+    # Logging
+    log_level: Optional[str] = None  # "DEBUG" | "INFO" | "WARNING" | "ERROR"
