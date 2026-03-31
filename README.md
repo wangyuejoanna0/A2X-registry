@@ -18,7 +18,7 @@ A2X 通过自动构建 **层次化能力目录**（分类树）+ **LLM 递归语
 
 ## 评估结果
 
-### [ToolRet_clean](database/ToolRet_clean/)（1839 服务 · 1714 查询）
+### [ToolRet_clean](https://github.com/Weizheng96/A2X-registry-demo-data/tree/main/ToolRet_clean)（1839 服务 · 1714 查询）
 
 数据来源：[tool-retrieval-benchmark](https://github.com/mangopy/tool-retrieval-benchmark)，经过数据清洗。
 
@@ -30,7 +30,7 @@ A2X 通过自动构建 **层次化能力目录**（分类树）+ **LLM 递归语
 
 \* Traditional 方案仅使用 name + description。若加入完整 inputSchema，单次查询 Token 消耗将达到 ~200k，已超出大多数模型的上下文窗口限制。
 
-### [publicMCP](database/publicMCP/)（1387 MCP 服务 · 50 查询）
+### [publicMCP](https://github.com/Weizheng96/A2X-registry-demo-data/tree/main/publicMCP)（1387 MCP 服务 · 50 查询）
 
 数据来源：[MCP 官方服务器列表](https://github.com/modelcontextprotocol/servers)，共 1387 条 MCP 服务器描述。查询模拟真实用户请求（含个人偏好、多服务组合等）。
 
